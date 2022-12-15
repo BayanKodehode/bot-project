@@ -1,7 +1,7 @@
-import React, { useState, ReactElement } from 'react';
+import React, { useState } from 'react';
 
 interface BotProps {
-  children: ReactElement;
+  children: string;
 }
 
 const Bot: React.FC<BotProps> = ({ children }) => {
@@ -22,8 +22,8 @@ const Bot: React.FC<BotProps> = ({ children }) => {
       <h1>Chatbot</h1>
       {children}
       <div className="p-5">
-        {messages.map((message, index) => (
-          <div key={index}>{message}</div>
+        {messages.map((message) => (
+          <div>{message}</div>
         ))}
       </div>
       <form onSubmit={(event) => event.preventDefault()}>
