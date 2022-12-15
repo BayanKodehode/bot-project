@@ -12,9 +12,9 @@ const Bot: React.FC<BotProps> = ({ children }) => {
     // generate chatbot response and add it to the message list
     // but the need more logic to handle the fast response
     setTimeout(() => {
-      const response = generateChatbotResponse(message);
+      const response = generateResponse(message);
       setMessages([...messages, response]);
-    }, 3000);     // not good might need changing the logic here
+    }, 3000);     // not good might need changing the logic here | still working for now
   };
 
   return (
@@ -34,7 +34,7 @@ const Bot: React.FC<BotProps> = ({ children }) => {
   );
 };
 
-const generateChatbotResponse = (message: string) => {
+const generateResponse = (message: string) => {
   if (message.toLowerCase().includes('hello')) {
     return 'Hello! How are you today?';
   } else {
