@@ -4,17 +4,17 @@ interface BotProps {
   children: string;
 }
 
-const Bot = ({children } : BotProps) => { 
-  const [messages, setMessages] = useState<string[]>([]);
+const Bot = ({children} : BotProps) => { 
+  const [responses, setResponses] = useState<string[]>([]);
 
-  const handleSendMessage = (message: string) => {
-    setMessages([...messages, message]);
-    // generate chatbot response and add it to the message list
-    // but the need more logic to handle the fast response
+  const handleSendResponse = (respons: string) => {
+    setResponses([...responses, respons]);
+    // generate chatbot response and add it to the respons list
+    // but this need more logic to handle the fast response
     setTimeout(() => {
-      const response = generateResponse(message);
-      setMessages([...messages, response]);
-    }, 2000);     // not good might need changing the logic here | still working for now
+      const response = generateResponse(respons);
+      setResponses([...responses, response]);
+    }, 2000);     // not good and might need changing the logic here but still working for now
   };
 
   return (
@@ -22,20 +22,20 @@ const Bot = ({children } : BotProps) => {
       <h1>Chatbot</h1>
       {children}
       <div className="p-5">
-        {messages.map((message) => (
-          <div>{message}</div>
+        {responses.map((respons) => (
+          <div>{respons}</div>
         ))}
       </div>
       <form onSubmit={(event) => event.preventDefault()}>
-        <input type="text" onChange={(event) => handleSendMessage(event.target.value)} />
+        <input type="text" onChange={(event) => handleSendResponse(event.target.value)} />
         <button type="submit">Send</button>
       </form>
     </div>
   );
 };
 
-const generateResponse = (message: string) => {
-  if (message.toLowerCase().includes('hello')) {
+const generateResponse = (respons: string) => {
+  if (respons.toLowerCase().includes('hello')) {
     return 'Hello! How are you today?';
   } else {
     return "I'm sorry, I didn't understand what you said.";
