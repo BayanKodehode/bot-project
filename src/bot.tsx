@@ -14,9 +14,9 @@ const Bot: React = () => {
   };
 
   return (
-    <>
-      <h1>Chatbot</h1>
-      <div>
+    <div className=" text-5xl pt-20 px-40">
+      <h1> stupid bot but kan be upgraded later LGTM</h1>
+      <div className="p-5">
         {messages.map((message, index) => (
           <div>{message}</div>
         ))}
@@ -25,7 +25,7 @@ const Bot: React = () => {
         <input type="text" onChange={(event) => handleSendMessage(event.target.value)} />
         <button type="submit">reset</button>
       </form>
-    </>
+    </div>
   );
 };
 
