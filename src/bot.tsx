@@ -4,7 +4,7 @@ interface BotProps {
   children: string;
 }
 
-const Bot: React.FC<BotProps> = ({ children }) => {
+const Bot: React.FC<BotProps> = ({ children }:<string>) => {   //must avoid FC some how later
   const [messages, setMessages] = useState<string[]>([]);
 
   const handleSendMessage = (message: string) => {
