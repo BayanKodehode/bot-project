@@ -9,12 +9,12 @@ const Bot = ({children} : BotProps) => {
 
   const handleSendResponse = (respons: string) => {
     setResponses([...responses, respons]);
-    // generate chatbot response and add it to the respons list
-    // but this need more logic to handle the fast response
+    // generate chatbot response and add it to the respons list,
+    // but this need different logic to handle the fast response
     setTimeout(() => {
       const response = generateResponse(respons);
       setResponses([...responses, response]);
-    }, 2000);     // not good and might need changing the logic here but still working for now
+    }, 2000);     // not good and might need chang the logic here, but still working for now
   };
 
   return (
