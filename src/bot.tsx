@@ -1,6 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, ReactElement } from 'react';
 
-const Bot: React = () => {
+interface BotProps {
+  children: ReactElement;
+}
+
+const Bot: React.FC<BotProps> = ({ children }) => {
   const [messages, setMessages] = useState<string[]>([]);
 
   const handleSendMessage = (message: string) => {
@@ -10,20 +14,21 @@ const Bot: React = () => {
     setTimeout(() => {
       const response = generateChatbotResponse(message);
       setMessages([...messages, response]);
-    }, 1000);     // not enough time might need changing the logic here
+    }, 3000);     // not good might need changing the logic here
   };
 
   return (
     <div className=" text-5xl pt-20 px-40">
-      <h1> stupid bot but kan be upgraded later LGTM</h1>
+      <h1>Chatbot</h1>
+      {children}
       <div className="p-5">
         {messages.map((message, index) => (
-          <div>{message}</div>
+          <div key={index}>{message}</div>
         ))}
       </div>
-      <form onSubmit={event}>
+      <form onSubmit={(event) => event.preventDefault()}>
         <input type="text" onChange={(event) => handleSendMessage(event.target.value)} />
-        <button type="submit">reset</button>
+        <button type="submit">Send</button>
       </form>
     </div>
   );
