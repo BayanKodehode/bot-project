@@ -4,7 +4,7 @@ interface BotProps {
   children: string;
 }
 
-const Bot: React.FC<BotProps> = ({ children }) => {   //must avoid FC some how later
+const Bot = ({children } : BotProps) => { 
   const [messages, setMessages] = useState<string[]>([]);
 
   const handleSendMessage = (message: string) => {
@@ -14,11 +14,11 @@ const Bot: React.FC<BotProps> = ({ children }) => {   //must avoid FC some how l
     setTimeout(() => {
       const response = generateResponse(message);
       setMessages([...messages, response]);
-    }, 3000);     // not good might need changing the logic here | still working for now
+    }, 2000);     // not good might need changing the logic here | still working for now
   };
 
   return (
-    <div className=" text-5xl pt-20 px-40">
+    <div className="text-5xl pt-20 px-40">
       <h1>Chatbot</h1>
       {children}
       <div className="p-5">
