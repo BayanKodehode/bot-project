@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { generateResponse } from "./components/responseGenerator";
+import { generateResponse, HideShowButton } from "./components/responseGenerator";
 
 interface IBot {
   greeting: string;// might need more here later on if needed for reasonable defaults
@@ -8,27 +8,6 @@ interface IBot {
 type ButtonProps = {            // tryieng onother type props here 
   onAgree: () => void;
   onDeny: () => void;
-}
-
-function HideShowButton(props: ButtonProps) {
-  const [isVisible, setIsVisible] = React.useState(true);
-
-  return (
-    <div>
-      {isVisible && (
-        <>
-          <button className="text-white p-5 m-2 bg-lime-600 box-border rounded-xl" 
-          onClick={props.onAgree}>Agree</button>
-          <button className="text-white p-5 m-2 bg-red-600 box-border rounded-xl" 
-          onClick={props.onDeny}>Deny</button>
-        </>
-      )}
-      <button className="text-white p-5 m-2 bg-black box-border rounded-xl" 
-      onClick={() => setIsVisible(!isVisible)}>
-        {isVisible ? 'Hide' : 'Show'}              
-      </button>
-    </div>
-  );
 }
 
 const Bot = ({ greeting }: IBot) => {
@@ -62,7 +41,7 @@ const Bot = ({ greeting }: IBot) => {
             setConversation([...conversation,
               `${greeting} ${message}, nice to meet you! What can I help you with today?`,
             ]);
-          }, 4000);
+          }, 3000);
             setMessage("");
           }}
         >
@@ -95,7 +74,7 @@ const Bot = ({ greeting }: IBot) => {
             value={message}
             onChange={(e) => setMessage(e.target.value)}
           />
-          <button  className="bg-red" type="submit">Send</button>
+          <button  className="text-white p-5" type="submit">Send</button>
           <HideShowButton onAgree={handleAgree} onDeny={handleDeny} />
         </form>
       )}

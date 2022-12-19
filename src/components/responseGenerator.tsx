@@ -1,3 +1,5 @@
+import * as React from 'react';
+
 const greetingResponses = [
     'Hello there! How can I help you today?',
     'Hi there! What can I do for you today?',
@@ -25,5 +27,28 @@ const greetingResponses = [
       return defaultResponses[Math.floor(Math.random() * defaultResponses.length)];
     } // need mor logic here later so it can be smarter 
   };
+
+  
+export const HideShowButton = (props: ButtonProps) => {
+  const [isVisible, setIsVisible] = React.useState(true);
+
+  return (
+    <div>
+      {isVisible && (
+        <>
+          <button className="text-white p-5 m-2 bg-lime-600 box-border rounded-xl" 
+          onClick={props.onAgree}>Agree</button>
+          <button className="text-white p-5 m-2 bg-red-600 box-border rounded-xl" 
+          onClick={props.onDeny}>Deny</button>
+        </>
+      )}
+      <button className="text-white p-5 m-2 bg-black box-border rounded-xl" 
+      onClick={() => setIsVisible(!isVisible)}>
+        {isVisible ? 'Hide' : 'Show'}              
+      </button>
+    </div>
+  );
+}
+
 
   
