@@ -5,9 +5,10 @@ interface IBot {
   greeting: string;// might need more here later on if needed for reasonable defaults
 }
 
-type ButtonProps = {            // tryieng onother type props here 
-  onAgree: () => void;
-  onDeny: () => void;
+export const ButtonProps = {            // tryieng onother type props here 
+  visiblity: false,
+  onAgree: () => string,
+  onDeny: () => string,
 }
 
 const Bot = ({ greeting }: IBot) => {
