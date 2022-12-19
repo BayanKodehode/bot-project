@@ -5,6 +5,6 @@ import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <Bot children="Hi there!"  />
+    <Bot greeting="Hello!"/>
   </React.StrictMode>,
 )

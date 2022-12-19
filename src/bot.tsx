@@ -1,46 +1,108 @@
-import { useState } from 'react';
+import * as React from 'react';
+import { generateResponse } from "./components/responseGenerator";
 
-interface BotProps {
-  children: string;
+interface IBot {
+  greeting: string;// might need more here later on if needed for reasonable defaults
 }
 
-const Bot = ({children} : BotProps) => { 
-  const [responses, setResponses] = useState<string[]>([]);
+type ButtonProps = {            // tryieng onother type props here 
+  onAgree: () => void;
+  onDeny: () => void;
+}
 
-  const handleSendResponse = (respons: string) => {
-    setResponses([...responses, respons]);
-    // generate chatbot response and add it to the respons list,
-    // but this need different logic to handle the fast response
-    setTimeout(() => {
-      const response = generateResponse(respons);
-      setResponses([...responses, response]);
-    }, 2000);     // not good and might need chang the logic here, but still working for now
+function HideShowButton(props: ButtonProps) {
+  const [isVisible, setIsVisible] = React.useState(true);
+
+  return (
+    <div>
+      {isVisible && (
+        <>
+          <button className="text-white p-5 m-2 bg-lime-600 box-border rounded-xl" 
+          onClick={props.onAgree}>Agree</button>
+          <button className="text-white p-5 m-2 bg-red-600 box-border rounded-xl" 
+          onClick={props.onDeny}>Deny</button>
+        </>
+      )}
+      <button className="text-white p-5 m-2 bg-black box-border rounded-xl" 
+      onClick={() => setIsVisible(!isVisible)}>
+        {isVisible ? 'Hide' : 'Show'}              
+      </button>
+    </div>
+  );
+}
+
+const Bot = ({ greeting }: IBot) => {
+  const [conversation, setConversation] = React.useState<string[]>([]);
+  const [message, setMessage] = React.useState("");
+  const [name, setName] = React.useState("");
+
+  const handleAgree = () => {
+    console.log("====================================");
+    console.log('agreement');
+    console.log("====================================");
+  };
+
+  const handleDeny = () => {
+    console.log("====================================");
+    console.log('deny');
+    console.log("====================================");
   };
 
   return (
-    <div className="text-5xl pt-20 px-40">
-      <h1>Chatbot</h1>
-      {children}
-      <div className="p-5">
-        {responses.map((respons) => (
-          <div>{respons}</div>
-        ))}
-      </div>
-      <form onSubmit={(event) => event.preventDefault()}>
-        <input type="text" onChange={(event) => handleSendResponse(event.target.value)} />
-        <button type="submit">Send</button>
-      </form>
+    <div className="bg-gray-500 p-40 m-10 text-5xl text-white">
+      {conversation.map((msg) => (
+        <div key={msg}>{msg}</div>
+      ))}
+      {!name && (
+        <form  className="text-black"
+          onSubmit={(e) => {
+            e.preventDefault();
+            setName(message);
+            setTimeout(() => {              {'just to show some thinking proses'}
+            setConversation([...conversation,
+              `${greeting} ${message}, nice to meet you! What can I help you with today?`,
+            ]);
+          }, 4000);
+            setMessage("");
+          }}
+        >
+          <input
+            className="p-5"
+            type="text"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            placeholder="Enter your name"
+          />
+          <button className="text-white p-5" type="submit">Submit</button>
+          <HideShowButton onAgree={handleAgree} onDeny={handleDeny} />
+        </form>
+      )}
+      {name && (
+        <form className="text-black"
+          onSubmit={(e) => {
+            e.preventDefault();
+            setConversation([...conversation, message]);
+            setTimeout(() => {              {'just to show some thinking proses'}
+              setConversation([...conversation,
+                generateResponse(message, greeting),
+              ]);
+            }, 2000);
+            setMessage("");
+          }}
+        >
+          <input
+            type="text"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+          />
+          <button  className="bg-red" type="submit">Send</button>
+          <HideShowButton onAgree={handleAgree} onDeny={handleDeny} />
+        </form>
+      )}
     </div>
   );
 };
 
-const generateResponse = (respons: string) => {
-  if (respons.toLowerCase().includes('hello')) {
-    return 'Hello! How are you today?';
-  } else {
-    return "I'm sorry, I didn't understand what you said.";
-  }
-};
-
 export default Bot;
 
+// can try with react-simple-chatbot pakage later on
