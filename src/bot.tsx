@@ -2,13 +2,7 @@ import * as React from 'react';
 import { generateResponse, HideShowButton } from "./components/responseGenerator";
 
 interface IBot {
-  greeting: string;// might need more here later on if needed for reasonable defaults
-}
-
-export const ButtonProps = {            // tryieng onother type props here 
-  visiblity: false,
-  onAgree: () => string,
-  onDeny: () => string,
+  greeting: string;// might need more here later on if needed for reasonable idie
 }
 
 const Bot = ({ greeting }: IBot) => {
@@ -54,7 +48,7 @@ const Bot = ({ greeting }: IBot) => {
             placeholder="Enter your name"
           />
           <button className="text-white p-5" type="submit">Submit</button>
-          <HideShowButton onAgree={handleAgree} onDeny={handleDeny} />
+          <HideShowButton onAgree={handleAgree} onDeny={handleDeny} isVisible={false}/>
         </form>
       )}
       {name && (
@@ -76,7 +70,7 @@ const Bot = ({ greeting }: IBot) => {
             onChange={(e) => setMessage(e.target.value)}
           />
           <button  className="text-white p-5" type="submit">Send</button>
-          <HideShowButton onAgree={handleAgree} onDeny={handleDeny} />
+          <HideShowButton onAgree={handleAgree} onDeny={handleDeny} isVisible={false}/>
         </form>
       )}
     </div>

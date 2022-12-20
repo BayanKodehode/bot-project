@@ -1,34 +1,30 @@
 import * as React from "react";
-import { ButtonProps } from '../bot';
+
+type ButtonProps = {
+  isVisible: boolean;
+  onAgree: () => string;
+  onDeny: () => string;
+};
 
 export const HideShowButton = (props: ButtonProps) => {
-  // let [isVisible, setIsVisible] = React.useState(true);
-  // isVisible = props.visiblity;
-  // props.visiblity = false;
+
+  if (!props.isVisible) {
+    return null;
+  }
   return (
     <div>
-      {props.visiblity && (
-        <>
-          <button
-            className="text-white p-4 m-2 bg-lime-600 box-border rounded-xl"
-            onClick={props.onAgree}
-          >
-            Agree
-          </button>
-          <button
-            className="text-white p-4 m-2 bg-red-600 box-border rounded-xl"
-            onClick={props.onDeny}
-          >
-            Deny
-          </button>
-        </>
-      )}
-      {/*<button
-        className="text-white p-5 m-2 bg-black box-border rounded-xl"
-        onClick={() => setIsVisible(!isVisible)}
+      <button
+        className="text-white p-4 m-2 bg-lime-600 box-border rounded-xl"
+        onClick={props.onAgree}
       >
-        {isVisible ? "Hide" : "Show"}
-      </button>*/}
+        Agree
+      </button>
+      <button
+        className="text-white p-4 m-2 bg-red-600 box-border rounded-xl"
+        onClick={props.onDeny}
+      >
+        Deny
+      </button>
     </div>
   );
 };
@@ -50,13 +46,16 @@ const defaultResponses = [
   "I'm sorry, I didn't understand your message. Could you please rephrase it?",
   "Could you please clarify your message for me?",
 ];
-// it will be more logic here later to respond to optional messages
 const optionalResponses = [
   "How about some hints?",
   "Would you like to have some hints here?",
   "Do you need some help to answer this?",
 ];
-export const generateResponse = (message: string, greeting: string, buttonProps: ButtonProps) => {
+export const generateResponse = (
+  message: string,
+  greeting: string,
+  buttonProps: ButtonProps
+) => {
   if (message.includes("hello")) {
     return greetingResponses[
       Math.floor(Math.random() * greetingResponses.length)
@@ -65,15 +64,15 @@ export const generateResponse = (message: string, greeting: string, buttonProps:
     return weatherResponses[
       Math.floor(Math.random() * weatherResponses.length)
     ];
-  } else if (message.includes("hints")){
-    return  optionalResponses[
+  } else if (message.includes("hints")) {
+    return optionalResponses[
       Math.floor(Math.random() * defaultResponses.length)
-    ]
-      // it can be any action here that helps the user as a hints 
-      // buttonProps.visiblity = true ;
+    ];
+    // how can we call the callback function here and change prop isVisible to true
+    HideShowButton(isVisible) // its not working here 
   } else {
     return defaultResponses[
       Math.floor(Math.random() * defaultResponses.length)
     ];
-  } 
+  }
 };
