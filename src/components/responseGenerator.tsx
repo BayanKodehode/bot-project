@@ -68,7 +68,7 @@ export const generateResponse = (
     return optionalResponses[
       Math.floor(Math.random() * defaultResponses.length)
     ];
-    // how can we call the callback function here and change prop isVisible to true
+    // how can we callback this component here and change the prop isVisible to true
     HideShowButton(isVisible) // its not working here 
   } else {
     return defaultResponses[
