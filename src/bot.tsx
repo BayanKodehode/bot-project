@@ -1,27 +1,29 @@
 import * as React from 'react';
-import { generateResponse, HideShowButton } from "./components/responseGenerator";
+import { generateResponse, HideShowButton, ButtonProps } from "./components/responseGenerator";
 
 interface IBot {
-  greeting: string;// might need more here later on if needed for reasonable idie
+  greeting: string;
 }
 
-const Bot = ({ greeting }: IBot) => {
+export const Bot = ({ greeting }: IBot, {visibility}: ButtonProps) => {
   const [conversation, setConversation] = React.useState<string[]>([]);
   const [message, setMessage] = React.useState("");
   const [name, setName] = React.useState("");
 
+  const [QResponseVisibility, setQResponseVisibility] = React.useState<boolean>(true);
+  visibility = QResponseVisibility;
+  
+`  // React.useEffect(() => {
+  //   return;
+  // });`
+
   const handleAgree = () => {
-    console.log("====================================");
     console.log('agreement');
-    console.log("====================================");
   };
 
   const handleDeny = () => {
-    console.log("====================================");
     console.log('deny');
-    console.log("====================================");
   };
-
   return (
     <div className="bg-gray-500 p-40 m-10 text-5xl text-white">
       {conversation.map((msg) => (
@@ -32,7 +34,7 @@ const Bot = ({ greeting }: IBot) => {
           onSubmit={(e) => {
             e.preventDefault();
             setName(message);
-            setTimeout(() => {              {'just to show some thinking proses'}
+            setTimeout(() => {              
             setConversation([...conversation,
               `${greeting} ${message}, nice to meet you! What can I help you with today?`,
             ]);
@@ -48,7 +50,8 @@ const Bot = ({ greeting }: IBot) => {
             placeholder="Enter your name"
           />
           <button className="text-white p-5" type="submit">Submit</button>
-          <HideShowButton onAgree={handleAgree} onDeny={handleDeny} isVisible={false}/>
+          <HideShowButton onAgree={handleAgree} onDeny={handleDeny} 
+          visibility={visibility} />
         </form>
       )}
       {name && (
@@ -56,7 +59,7 @@ const Bot = ({ greeting }: IBot) => {
           onSubmit={(e) => {
             e.preventDefault();
             setConversation([...conversation, message]);
-            setTimeout(() => {              {'just to show some thinking proses'}
+            setTimeout(() => {              
               setConversation([...conversation,
                 generateResponse(message, greeting),
               ]);
@@ -70,7 +73,8 @@ const Bot = ({ greeting }: IBot) => {
             onChange={(e) => setMessage(e.target.value)}
           />
           <button  className="text-white p-5" type="submit">Send</button>
-          <HideShowButton onAgree={handleAgree} onDeny={handleDeny} isVisible={false}/>
+          <HideShowButton onAgree={handleAgree} onDeny={handleDeny} 
+          visibility={visibility}/>
         </form>
       )}
     </div>
