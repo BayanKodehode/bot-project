@@ -2,7 +2,7 @@ import * as React from "react";
 import { Bot } from "../bot";
 
 export type ButtonProps = {
-  visibility: boolean;
+  visibility: false;
   onAgree: () => string;
   onDeny: () => string;
 };
@@ -51,7 +51,7 @@ const optionalResponses = [
   "Would you like to have some hints here?",
   "Do you need some help to answer this?",
 ];
-export const generateResponse = (message: string, greeting: string) => {
+export function generateResponse (message: string, greeting: string, visibilityProps : ButtonProps) {
   if (message.includes("hello")) {
     return greetingResponses[
       Math.floor(Math.random() * greetingResponses.length)
@@ -65,8 +65,9 @@ export const generateResponse = (message: string, greeting: string) => {
       Math.floor(Math.random() * defaultResponses.length)
     ];
     // it can be any action here that helps the user as a hints
+    //(<div><HideShowButton onAgree={handleAgree} onDeny={handleDeny} visibility={true}/></div>)
+    visibilityProps.visibility = true;
 
-    
   } else {
     return defaultResponses[
       Math.floor(Math.random() * defaultResponses.length)

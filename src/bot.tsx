@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { generateResponse, HideShowButton, ButtonProps } from "./components/responseGenerator";
+import { generateResponse, HideShowButton, ButtonProps } from './components/responseGenerator';
 
 interface IBot {
   greeting: string;
@@ -9,13 +9,17 @@ export const Bot = ({ greeting }: IBot, {visibility}: ButtonProps) => {
   const [conversation, setConversation] = React.useState<string[]>([]);
   const [message, setMessage] = React.useState("");
   const [name, setName] = React.useState("");
-
-  const [QResponseVisibility, setQResponseVisibility] = React.useState<boolean>(true);
-  visibility = QResponseVisibility;
   
-`  // React.useEffect(() => {
-  //   return;
-  // });`
+  const [ResponseVisibility, setResponseVisibility] = React.useState<boolean>(true);
+ 
+  React.useEffect(() => {
+    visibility == true // need a way to trigger this action from ResponseGenerator() instead 
+
+    if (visibility == true) {
+      console.log(visibility);
+      setResponseVisibility(visibility);
+    }
+  },[])
 
   const handleAgree = () => {
     console.log('agreement');
@@ -50,8 +54,7 @@ export const Bot = ({ greeting }: IBot, {visibility}: ButtonProps) => {
             placeholder="Enter your name"
           />
           <button className="text-white p-5" type="submit">Submit</button>
-          <HideShowButton onAgree={handleAgree} onDeny={handleDeny} 
-          visibility={visibility} />
+          
         </form>
       )}
       {name && (
@@ -73,8 +76,7 @@ export const Bot = ({ greeting }: IBot, {visibility}: ButtonProps) => {
             onChange={(e) => setMessage(e.target.value)}
           />
           <button  className="text-white p-5" type="submit">Send</button>
-          <HideShowButton onAgree={handleAgree} onDeny={handleDeny} 
-          visibility={visibility}/>
+          <HideShowButton onAgree={handleAgree} onDeny={handleDeny} visibility={ResponseVisibility}/>
         </form>
       )}
     </div>
