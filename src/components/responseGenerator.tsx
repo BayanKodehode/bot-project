@@ -65,8 +65,7 @@ export function generateResponse (message: string, greeting: string, visibilityP
       Math.floor(Math.random() * defaultResponses.length)
     ];
     // it can be any action here that helps the user as a hints
-    //(<div><HideShowButton onAgree={handleAgree} onDeny={handleDeny} visibility={true}/></div>)
-    visibilityProps.visibility = true;
+    visibilityProps.visibility = true; // this is not working yet
 
   } else {
     return defaultResponses[
