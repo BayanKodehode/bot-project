@@ -1,14 +1,14 @@
 import * as React from "react";
+import { Bot } from "../bot";
 
-type ButtonProps = {
-  isVisible: boolean;
+export type ButtonProps = {
+  visibility: boolean;
   onAgree: () => string;
   onDeny: () => string;
 };
 
 export const HideShowButton = (props: ButtonProps) => {
-
-  if (!props.isVisible) {
+  if (!props.visibility) {
     return null;
   }
   return (
@@ -51,11 +51,7 @@ const optionalResponses = [
   "Would you like to have some hints here?",
   "Do you need some help to answer this?",
 ];
-export const generateResponse = (
-  message: string,
-  greeting: string,
-  buttonProps: ButtonProps
-) => {
+export const generateResponse = (message: string, greeting: string) => {
   if (message.includes("hello")) {
     return greetingResponses[
       Math.floor(Math.random() * greetingResponses.length)
@@ -68,8 +64,9 @@ export const generateResponse = (
     return optionalResponses[
       Math.floor(Math.random() * defaultResponses.length)
     ];
-    // how can we callback this component here and change the prop isVisible to true
-    HideShowButton(props.isVisible) // its not working here 
+    // it can be any action here that helps the user as a hints
+
+    
   } else {
     return defaultResponses[
       Math.floor(Math.random() * defaultResponses.length)
