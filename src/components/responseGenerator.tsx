@@ -1,33 +1,6 @@
 import * as React from "react";
 import { Bot } from "../bot";
 
-export type ButtonProps = {
-  visibility: false;
-  onAgree: () => string;
-  onDeny: () => string;
-};
-
-export const HideShowButton = (props: ButtonProps) => {
-  if (!props.visibility) {
-    return null;
-  }
-  return (
-    <div>
-      <button
-        className="text-white p-4 m-2 bg-lime-600 box-border rounded-xl"
-        onClick={props.onAgree}
-      >
-        Agree
-      </button>
-      <button
-        className="text-white p-4 m-2 bg-red-600 box-border rounded-xl"
-        onClick={props.onDeny}
-      >
-        Deny
-      </button>
-    </div>
-  );
-};
 
 const greetingResponses = [
   "Hello there! How can I help you today?",
@@ -47,29 +20,53 @@ const defaultResponses = [
   "Could you please clarify your message for me?",
 ];
 const optionalResponses = [
-  "How about some hints?",
+  "yup, How about some hints?",
   "Would you like to have some hints here?",
   "Do you need some help to answer this?",
 ];
-export function generateResponse (message: string, greeting: string, visibilityProps : ButtonProps) {
+const affirmativeResponses = [
+  "Great! Is there anything else I can help with?",
+  "Sounds good! Do you have any other questions?",
+  "Alright! Do you need help with anything else?",
+];
+
+const negativeResponses = [
+  "Alright, let me know if you need anything else.",
+  "No problem. Let me know if you have any other questions.",
+  "Understood. Let me know if you need further assistance.",
+];
+export function generateResponse(
+  message: string,
+  greeting: string,
+  toggleVisibility: () => void
+) {
   if (message.includes("hello")) {
     return greetingResponses[
       Math.floor(Math.random() * greetingResponses.length)
     ];
+  } else if (message.includes("help")) {
+    return `Yup! How am I help you?`;
+
   } else if (message.includes("weather")) {
     return weatherResponses[
       Math.floor(Math.random() * weatherResponses.length)
     ];
-  } else if (message.includes("hints")) {
-    return optionalResponses[
-      Math.floor(Math.random() * defaultResponses.length)
+  } else if (message.toLowerCase().includes("hints")) {
+    return (
+      toggleVisibility(),
+      optionalResponses[Math.floor(Math.random() * optionalResponses.length)]
+    );
+  } else if (message.includes("yes")) {
+    return affirmativeResponses[
+      Math.floor(Math.random() * affirmativeResponses.length)
     ];
-    // it can be any action here that helps the user as a hints
-    visibilityProps.visibility = true; // this is not working yet
-
+  } else if (message.includes("no")) {
+    return negativeResponses[
+      Math.floor(Math.random() * negativeResponses.length)
+    ];
   } else {
     return defaultResponses[
       Math.floor(Math.random() * defaultResponses.length)
     ];
   }
-};
+}

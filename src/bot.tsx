@@ -1,48 +1,62 @@
-import * as React from 'react';
-import { generateResponse, HideShowButton, ButtonProps } from './components/responseGenerator';
+import * as React from "react";
+import { useState, useEffect } from "react";
+import { generateResponse } from "./components/responseGenerator";
+import { HideShowButton, ButtonProps } from "./components/HideShowButton.tsx";
 
 interface IBot {
   greeting: string;
 }
 
-export const Bot = ({ greeting }: IBot, {visibility}: ButtonProps) => {
-  const [conversation, setConversation] = React.useState<string[]>([]);
-  const [message, setMessage] = React.useState("");
-  const [name, setName] = React.useState("");
-  
-  const [ResponseVisibility, setResponseVisibility] = React.useState<boolean>(true);
- 
-  React.useEffect(() => {
-    visibility == true // need a way to trigger this action from ResponseGenerator() instead 
+export const Bot = ({ greeting }: IBot) => {
+  const [conversation, setConversation] = useState<string[]>([]);
+  const [message, setMessage] = useState("");
+  const [name, setName] = useState("");
+  const [visibility, setVisibility] = useState<boolean>(false);
+  const [response, setResponse] = useState<string>("");
 
-    if (visibility == true) {
-      console.log(visibility);
-      setResponseVisibility(visibility);
-    }
-  },[])
-
-  const handleAgree = () => {
-    console.log('agreement');
+  const handleAgree = (response: string) => {
+    console.log(`You agreed to ${response}`);
+    setResponse("");
   };
 
-  const handleDeny = () => {
-    console.log('deny');
+  const handleDeny = (response: string) => {
+    console.log(`You denied ${response}`);
+    setResponse("");
   };
+
+  const toggleVisibility = () => {
+    setVisibility(!visibility);
+  };
+
+  useEffect(() => {
+    document.title = `${name} in the house`;
+  }, [name]);
+
+  // useEffect(() => {             // can try with this later
+  //   const handleResponse = () => {
+  //    // it can be any action here
+  //   };
+
+  //   handleResponse();
+  // }, [message]);
+
   return (
     <div className="bg-gray-500 p-40 m-10 text-5xl text-white">
-      {conversation.map((msg) => (
-        <div key={msg}>{msg}</div>
+      {conversation.map((msg, index) => (
+        <div key={index}>{msg}</div>
       ))}
       {!name && (
-        <form  className="text-black"
+        <form
+          className="text-black"
           onSubmit={(e) => {
             e.preventDefault();
             setName(message);
-            setTimeout(() => {              
-            setConversation([...conversation,
-              `${greeting} ${message}, nice to meet you! What can I help you with today?`,
-            ]);
-          }, 3000);
+            setTimeout(() => {
+              setConversation([
+                ...conversation,
+                `${greeting} ${message}, nice to meet you! What can I help you with today?`,
+              ]);
+            }, 3000);
             setMessage("");
           }}
         >
@@ -53,18 +67,21 @@ export const Bot = ({ greeting }: IBot, {visibility}: ButtonProps) => {
             onChange={(e) => setMessage(e.target.value)}
             placeholder="Enter your name"
           />
-          <button className="text-white p-5" type="submit">Submit</button>
-          
+          <button className="text-white p-5" type="submit">
+            Submit
+          </button>
         </form>
       )}
       {name && (
-        <form className="text-black"
+        <form
+          className="text-black"
           onSubmit={(e) => {
             e.preventDefault();
             setConversation([...conversation, message]);
-            setTimeout(() => {              
-              setConversation([...conversation,
-                generateResponse(message, greeting),
+            setTimeout(() => {
+              setConversation([
+                ...conversation,
+                generateResponse(message, greeting, toggleVisibility),
               ]);
             }, 2000);
             setMessage("");
@@ -75,8 +92,15 @@ export const Bot = ({ greeting }: IBot, {visibility}: ButtonProps) => {
             value={message}
             onChange={(e) => setMessage(e.target.value)}
           />
-          <button  className="text-white p-5" type="submit">Send</button>
-          <HideShowButton onAgree={handleAgree} onDeny={handleDeny} visibility={ResponseVisibility}/>
+          <button className="text-white p-5" type="submit">
+            Send
+          </button>
+          <HideShowButton
+            onAgree={handleAgree}
+            onDeny={handleDeny}
+            toggleVisibility={toggleVisibility}
+            visibility={visibility}
+          />
         </form>
       )}
     </div>
@@ -84,5 +108,3 @@ export const Bot = ({ greeting }: IBot, {visibility}: ButtonProps) => {
 };
 
 export default Bot;
-
-// can try with react-simple-chatbot pakage later on
