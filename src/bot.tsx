@@ -15,12 +15,12 @@ export const Bot = ({ greeting }: IBot) => {
   const [response, setResponse] = useState<string>("");
 
   const handleAgree = (response: string) => {
-    console.log(`You agreed to ${response}`);
+    console.log(`You agreed to ${response}`); // need to have more effective actions here
     setResponse("");
   };
 
   const handleDeny = (response: string) => {
-    console.log(`You denied ${response}`);
+    console.log(`You denied ${response}`); // need to have more effective actions here
     setResponse("");
   };
 
