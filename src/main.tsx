@@ -1,10 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import Bot from './bot'
 import './index.css'
+import BoxWrapper from './BoxWrapper';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <Bot greeting="Hello!" />
+    <BoxWrapper/>
   </React.StrictMode>,
 )

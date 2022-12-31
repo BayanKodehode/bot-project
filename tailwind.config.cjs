@@ -1,11 +1,14 @@
-/** @type {import('tailwindcss').Config} */
+const defaultTheme = require("tailwindcss/defaultTheme");
+
 module.exports = {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        display: ["Prosto One", ...defaultTheme.fontFamily.sans],
+        chatFont: ["Raleway", ...defaultTheme.fontFamily.sans],
+      },
+    },
   },
   plugins: [],
-}
+};
